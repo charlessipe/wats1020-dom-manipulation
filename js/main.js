@@ -14,9 +14,6 @@ $( document ).ready(function() {
         total: 0
     };
   
-    console.log(voteCounts);
-  
-    console.log("hi");
     // Place all your Javascript code inside this "document ready" function so
     // it does not run until the DOM is ready for Javascript manipulation.
 
@@ -28,9 +25,9 @@ $( document ).ready(function() {
     //          a base requirement.)
 
     $(".login-btn").click(function(){
+      $(".login-btn").hide(); // hide login button
       $(".form-control").hide(); // hide input forms
-      $(".user-info").show(); // change text of user-fullname class to "First Last"
-      //.html(userInfo.firstName + userInfo.lastName)
+      $(".user-info").show().html("Welcome " + userInfo.firstName + " " + userInfo.lastName); // change text of user-fullname class to "First Last"
     });
 
 
@@ -45,25 +42,30 @@ $( document ).ready(function() {
     //          understands they can hide the text again.
     
     $(".view-details").click(function() {
-     /* if(document.getElementsByClassName('view-details').innerHTML == "View details &raquo;"){
-        alert('hi');
-      }
-     */
-      
-      //$(".view-details").text("Hide Details");
       
       
-      if($(".view-details").text("View details »")){ // Conditional to check the text of the button
-        $(".view-details").text("Hide Details"); // Change the text to "Show Details"
-      }
-      else if($(".view-details").text("Hide Details")){
-        $(".view-details").text("View details »"); // Change the text to "Hide Details"
+      /*if($(".view-details").html("View details »")){ // Conditional to check the text of the button
+        $(".view-details").html("Hide Details"); // Change the text to "Hide Details"
       }
       
-      
+      else if($(".view-details").html("Hide Details")){
+        $(".view-details").html("View details »"); // Change the text to "View Details"
+      }
+      */
       
       $(".details").toggle(); // Toggle text with details class
+       
+      if($( ".details" ).is( ":visible" )){ 
+        $(".view-details").text("Hide Details");
+      // change text to "Hide Details"
+      }
+      else{ 
+      // change text to "show details"
+        $(".view-details").text("View details »");
+      }
+  
     });
+
   
   /*
      $(".view-details").toggle(function() {
@@ -92,22 +94,22 @@ $( document ).ready(function() {
     //      5. Modify the `width` attribute on each progress bar to set the updated percentage.
 
     $(".vote").click(function(){
-      console.log("voted");
       
       if(($(this).attr('data-vote') === 'great')){  // if data-vote attribute equals great, increment
-         ++voteCounts.great;
+        voteCounts.great ++;
       }
       else if(($(this).attr('data-vote') === 'greatest')){ // if data-vote attribute equals greatest, increment
         voteCounts.greatest ++;
       }
       voteCounts.total ++;
       console.log(voteCounts);
-      var greatPercent = (voteCounts.great/voteCounts.total) + "%";  // Calculate percentage of great votes
-      var greatestPercent = (voteCounts.greatest/voteCounts.total) + "%"; // Calculate percentage of greatest votes
+      var greatPercent = (voteCounts.great/voteCounts.total*100) + "%";  // Calculate percentage of great votes
+      console.log(greatPercent);
+      var greatestPercent = (voteCounts.greatest/voteCounts.total*100) + "%"; // Calculate percentage of greatest votes
       
       
-      $(".great-progress").attr('style', greatPercent); // Change value of great progress attribute to greatPercent
-      $(".greatest-progress").attr('style', greatestPercent); // Change value of greatest progress attribute to greatestPercent
+      $(".great-progress").attr('style', "width: " + greatPercent); // Change value of great progress attribute to greatPercent
+      $(".greatest-progress").attr('style', "width: " + greatestPercent); // Change value of greatest progress attribute to greatestPercent
       
     });
     
